@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setAuthToken } from "../../api/auth";
 import img from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
@@ -41,6 +42,7 @@ const SignUp = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        setAuthToken(user);
       })
       .catch((err) => console.error(err));
   };
@@ -105,7 +107,11 @@ const SignUp = () => {
                 Login
               </Link>
             </p>
-            <button onClick={signInWithGoogle}>Google</button>
+            <span className="text-center">
+              <button className=" btn btn-ghost" onClick={signInWithGoogle}>
+                Google
+              </button>
+            </span>
           </div>
         </div>
       </div>

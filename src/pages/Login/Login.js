@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setAuthToken } from "../../api/auth";
 import img from "../../assets/images/login/login.svg";
 import { AuthContext } from "../../context/AuthProvider/AuthProvider";
 
 const Login = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, userSignInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -40,6 +41,17 @@ const Login = () => {
             form.reset();
             navigate(from, { replace: true });
           });
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const signInWithGoogle = () => {
+    userSignInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+
+        setAuthToken(user);
       })
       .catch((err) => console.error(err));
   };
@@ -97,6 +109,11 @@ const Login = () => {
                 Sign up
               </Link>
             </p>
+            <span className="text-center">
+              <button className=" btn btn-ghost" onClick={signInWithGoogle}>
+                Google
+              </button>
+            </span>
           </div>
         </div>
       </div>
