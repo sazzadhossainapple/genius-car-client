@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import ServiceCard from "./ServiceCard";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const [isAsc, setIsAsc] = useState(true);
+  const [search, setSearch] = useState("");
+
+  const searchRef = useRef();
 
   useEffect(() => {
-    fetch("https://genius-car-server-psi-one.vercel.app/services")
+    fetch(
+      `http://localhost:5000/services?search=${search}&order=${
+        isAsc ? "asc" : "dsc"
+      }`
+    )
       .then((res) => res.json())
       .then((data) => setServices(data));
-  }, []);
+  }, [isAsc, search]);
+
+  const handleSearch = () => {
+    setSearch(searchRef.current.value);
+  };
 
   return (
     <div className=" mb-12">
@@ -20,6 +33,15 @@ const Services = () => {
           humour, or randomised <br></br> words which don't look even slightly
           believable.
         </p>
+        <input
+          ref={searchRef}
+          className="input input-bordered input-sm"
+          type="text"
+        />{" "}
+        <button onClick={handleSearch}>Search</button>
+        <button className="btn btn-ghost" onClick={() => setIsAsc(!isAsc)}>
+          {isAsc ? "desc" : "asc"}
+        </button>
       </div>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
