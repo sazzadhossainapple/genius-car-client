@@ -43,11 +43,7 @@ const Checkout = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.acknowledged) {
-          alert("Order Place Successfully");
-          form.reset();
-          navigate("/orders");
-        }
+        window.location.replace(data.url);
       })
       .catch((err) => console.log(err));
   };
