@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../layout/Main";
 import Checkout from "../../pages/Checkout/Checkout";
+import PaymentFail from "../../pages/Checkout/PaymentFail";
+import PaymentSuccess from "../../pages/Checkout/PaymentSuccess";
 import Home from "../../pages/Home/Home/Home";
 import Login from "../../pages/Login/Login";
 import Orders from "../../pages/Orders/Orders";
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
             <Orders></Orders>
           </PrivateRoutes>
         ),
+      },
+      {
+        path: "/payment/success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/payment/fail",
+        element: <PaymentFail />,
       },
     ],
   },
